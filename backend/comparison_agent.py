@@ -10,37 +10,51 @@ client = OpenAI(
     base_url="https://openrouter.ai/api/v1"
 )
 
-def research_agent(company):
+def comparison_agent(company1, company2):
 
-    search_results = search_agent(company)
+    data1 = search_agent(company1)
+
+    data2 = search_agent(company2)
 
     prompt = f"""
-You are a senior business analyst.
+You are a senior market intelligence consultant.
 
-Below is real information collected from the web.
+Company 1:
+{company1}
 
-{search_results}
+Information:
+{data1}
 
-Create a business intelligence report.
+-----------------------------------
+
+Company 2:
+{company2}
+
+Information:
+{data2}
+
+Create a comparison report.
 
 Provide:
 
-# Company Overview
+# Executive Summary
 
-# Products and Services
+# Products Comparison
+
+# Business Model Comparison
 
 # Target Customers
 
-# Business Model
+# Strengths
 
-# Key Strengths
+# Weaknesses
 
-# Market Position
+# Competitive Advantages
 
-Rules:
-- Use ONLY the provided information.
-- Do not invent facts.
-- Mention uncertainty if data is missing.
+# Strategic Recommendation
+
+Use only provided information.
+Do not invent facts.
 """
 
     response = client.chat.completions.create(
@@ -50,7 +64,8 @@ Rules:
                 "role": "user",
                 "content": prompt
             }
-        ]
+        ],
+        temperature=0.3
     )
 
     return response.choices[0].message.content

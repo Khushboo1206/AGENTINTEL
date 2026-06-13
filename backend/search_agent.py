@@ -1,9 +1,32 @@
-import requests
+from tavily import TavilyClient
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+client = TavilyClient(
+    api_key=os.getenv("TAVILY_API_KEY")
+)
 
 def search_agent(company):
 
-    query = f"{company} company overview"
+    response = client.search(
+        query=f"{company} company overview products services",
+        search_depth="advanced",
+        max_results=5
+    )
 
-    url = f"https://duckduckgo.com/html/?q={query}"
+    results = []
 
-    return f"Search query executed for {company}"
+    for item in response["results"]:
+
+        results.append(
+            f"""
+Title: {item['title']}
+
+Content:
+{item['content']}
+"""
+        )
+
+    return "\n\n".join(results)
