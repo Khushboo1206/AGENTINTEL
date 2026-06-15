@@ -1,10 +1,12 @@
 import { useState } from "react";
+
 import {
   analyzeCompany,
   generateSwot,
   compareCompanies,
   getHistory
 } from "../services/api";
+
 import Loader from "../components/Loader";
 import ReportCard from "../components/ReportCard";
 import SWOTCard from "../components/SWOTCard";
@@ -12,48 +14,82 @@ import ComparisonCard from "../components/ComparisonCard";
 import HistoryCard from "../components/HistoryCard";
 import GlassCard from "../components/GlassCard";
 import Navbar from "../components/Navbar";
+
 import toast from "react-hot-toast";
 
 function Dashboard() {
+
   const [company, setCompany] = useState("");
+
   const [company1, setCompany1] = useState("");
+
   const [company2, setCompany2] = useState("");
+
   const [report, setReport] = useState("");
+
   const [swot, setSwot] = useState("");
+
   const [comparison, setComparison] = useState("");
+
   const [history, setHistory] = useState([]);
+
   const [loading, setLoading] = useState(false);
+
   const [activeTab, setActiveTab] =
     useState("research");
+
+
+  // =====================
+  // RESEARCH
+  // =====================
+
   const handleResearch = async () => {
+
+    if (!company.trim()) {
+
+      toast.error(
+        "Enter a company name"
+      );
+
+      return;
+    }
+
     try {
+
       setLoading(true);
+
+      setSwot("");
+
+      setComparison("");
+
       const response =
-        await analyzeCompany(
-          company
-        );
+        await analyzeCompany(company);
 
       setReport(
-
         response.data.report
-
       );
 
       setActiveTab(
-
         "research"
+      );
 
+      toast.success(
+        "Research completed"
       );
 
     }
 
-    catch(error){
+    catch (error) {
 
       console.error(error);
 
+      toast.error(
+        "Research failed"
+      );
+
     }
 
-    finally{
+    finally {
 
       setLoading(false);
 
@@ -61,42 +97,60 @@ function Dashboard() {
 
   };
 
+
+  // =====================
+  // SWOT
+  // =====================
 
   const handleSwot = async () => {
 
+    if (!company.trim()) {
+
+      toast.error(
+        "Enter a company name"
+      );
+
+      return;
+    }
+
     try {
 
       setLoading(true);
 
+      setReport("");
+
+      setComparison("");
+
       const response =
-
         await generateSwot(
-
           company
-
         );
 
       setSwot(
-
         response.data.swot
-
       );
 
       setActiveTab(
-
         "swot"
+      );
 
+      toast.success(
+        "SWOT generated"
       );
 
     }
 
-    catch(error){
+    catch (error) {
 
       console.error(error);
 
+      toast.error(
+        "SWOT failed"
+      );
+
     }
 
-    finally{
+    finally {
 
       setLoading(false);
 
@@ -105,11 +159,38 @@ function Dashboard() {
   };
 
 
+  // =====================
+  // COMPARE
+  // =====================
+
   const handleCompare = async () => {
+
+    if (
+
+      !company1.trim()
+
+      ||
+
+      !company2.trim()
+
+    ) {
+
+      toast.error(
+
+        "Enter both companies"
+
+      );
+
+      return;
+    }
 
     try {
 
       setLoading(true);
+
+      setReport("");
+
+      setSwot("");
 
       const response =
 
@@ -124,7 +205,6 @@ function Dashboard() {
       setComparison(
 
         response.data
-
         .comparison_report
 
       );
@@ -135,15 +215,27 @@ function Dashboard() {
 
       );
 
+      toast.success(
+
+        "Comparison completed"
+
+      );
+
     }
 
-    catch(error){
+    catch (error) {
 
       console.error(error);
 
+      toast.error(
+
+        "Comparison failed"
+
+      );
+
     }
 
-    finally{
+    finally {
 
       setLoading(false);
 
@@ -151,6 +243,10 @@ function Dashboard() {
 
   };
 
+
+  // =====================
+  // HISTORY
+  // =====================
 
   const handleHistory = async () => {
 
@@ -176,13 +272,19 @@ function Dashboard() {
 
     }
 
-    catch(error){
+    catch (error) {
 
       console.error(error);
 
+      toast.error(
+
+        "History unavailable"
+
+      );
+
     }
 
-    finally{
+    finally {
 
       setLoading(false);
 
@@ -217,6 +319,8 @@ function Dashboard() {
 
       ></div>
 
+
+      {/* HERO */}
 
       <div className="hero-card">
 
@@ -264,6 +368,9 @@ function Dashboard() {
         className="dashboard-grid"
 
       >
+
+
+        {/* LEFT PANEL */}
 
         <GlassCard>
 
@@ -453,6 +560,8 @@ function Dashboard() {
 
         </GlassCard>
 
+
+        {/* RIGHT PANEL */}
 
         <div
 

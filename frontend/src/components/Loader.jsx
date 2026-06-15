@@ -1,9 +1,21 @@
 function Loader() {
+
   return (
+
     <div className="loader-container">
-      <h3>Analyzing...</h3>
+
+      <div className="loader-spinner"></div>
+
+      <p>
+
+        AI agents are working...
+
+      </p>
+
     </div>
+
   );
+
 }
 
 export default Loader;
