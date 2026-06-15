@@ -12,6 +12,7 @@ import ComparisonCard from "../components/ComparisonCard";
 import HistoryCard from "../components/HistoryCard";
 import GlassCard from "../components/GlassCard";
 import Navbar from "../components/Navbar";
+import toast from "react-hot-toast";
 
 function Dashboard() {
   const [company, setCompany] = useState("");
