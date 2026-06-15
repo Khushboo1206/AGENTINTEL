@@ -1,0 +1,26 @@
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-container {
+    padding: 20px 12px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+}
+
+body{
+  background:#0a0a0a;
+  color:white;
+  overflow-x:hidden;
+}

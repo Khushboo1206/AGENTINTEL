@@ -1,5 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
+from search_agent import search_agent
 import os
 
 load_dotenv()
@@ -11,14 +12,18 @@ client = OpenAI(
 
 def swot_agent(company):
 
+    search_results = search_agent(company)
+
     prompt = f"""
-You are a senior business consultant.
+You are a senior business strategy consultant.
 
-Create a SWOT analysis for:
+Below is real company information collected from the web.
 
-{company}
+{search_results}
 
-Provide:
+Create a detailed SWOT Analysis.
+
+Provide ONLY these sections:
 
 # Strengths
 
@@ -29,9 +34,11 @@ Provide:
 # Threats
 
 Rules:
-- Be realistic
-- Do not invent facts
-- Mention uncertainty if information is unavailable
+- Use the provided information.
+- Do not create a company overview.
+- Do not explain products/services.
+- Focus only on SWOT.
+- Mention uncertainty where information is limited.
 """
 
     response = client.chat.completions.create(
@@ -42,7 +49,7 @@ Rules:
                 "content": prompt
             }
         ],
-        temperature=0.3
+        temperature=0.2
     )
 
     return response.choices[0].message.content
