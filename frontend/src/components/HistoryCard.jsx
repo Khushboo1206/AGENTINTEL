@@ -32,40 +32,48 @@ function HistoryCard({ history }) {
 
         :
 
-        history.map((item, index) => (
+        (
 
-          <div
-            key={index}
-            className="history-item"
-          >
+          history.map((item) => (
 
-            <h4>
+            <div
 
-              {item.company}
+              key={item.id}
 
-            </h4>
+              className="history-item"
 
-            <p>
+            >
 
-              {item.type}
+              <h4>
 
-            </p>
+                {item.company}
 
-            <small>
+              </h4>
 
-              {item.created_at}
+              <p>
 
-            </small>
+                {item.report_type}
 
-          </div>
+              </p>
 
-        ))
+              <small>
+
+                {item.created_at}
+
+              </small>
+
+            </div>
+
+          ))
+
+        )
 
       }
 
     </GlassCard>
 
   );
+
 }
 
 export default HistoryCard;

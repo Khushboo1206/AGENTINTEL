@@ -54,6 +54,11 @@ function Dashboard() {
       return;
     }
 
+    const toastId =
+      toast.loading(
+        "Generating research..."
+      );
+
     try {
 
       setLoading(true);
@@ -63,7 +68,10 @@ function Dashboard() {
       setComparison("");
 
       const response =
-        await analyzeCompany(company);
+
+        await analyzeCompany(
+          company
+        );
 
       setReport(
         response.data.report
@@ -74,7 +82,10 @@ function Dashboard() {
       );
 
       toast.success(
-        "Research completed"
+        "Research completed",
+        {
+          id: toastId
+        }
       );
 
     }
@@ -84,7 +95,10 @@ function Dashboard() {
       console.error(error);
 
       toast.error(
-        "Research failed"
+        "Research failed",
+        {
+          id: toastId
+        }
       );
 
     }
@@ -113,6 +127,11 @@ function Dashboard() {
       return;
     }
 
+    const toastId =
+      toast.loading(
+        "Generating SWOT..."
+      );
+
     try {
 
       setLoading(true);
@@ -122,6 +141,7 @@ function Dashboard() {
       setComparison("");
 
       const response =
+
         await generateSwot(
           company
         );
@@ -135,7 +155,10 @@ function Dashboard() {
       );
 
       toast.success(
-        "SWOT generated"
+        "SWOT generated",
+        {
+          id: toastId
+        }
       );
 
     }
@@ -145,7 +168,10 @@ function Dashboard() {
       console.error(error);
 
       toast.error(
-        "SWOT failed"
+        "SWOT failed",
+        {
+          id: toastId
+        }
       );
 
     }
@@ -176,13 +202,17 @@ function Dashboard() {
     ) {
 
       toast.error(
-
         "Enter both companies"
-
       );
 
       return;
     }
+
+    const toastId =
+
+      toast.loading(
+        "Comparing companies..."
+      );
 
     try {
 
@@ -217,7 +247,13 @@ function Dashboard() {
 
       toast.success(
 
-        "Comparison completed"
+        "Comparison completed",
+
+        {
+
+          id: toastId
+
+        }
 
       );
 
@@ -229,7 +265,13 @@ function Dashboard() {
 
       toast.error(
 
-        "Comparison failed"
+        "Comparison failed",
+
+        {
+
+          id: toastId
+
+        }
 
       );
 
@@ -249,6 +291,14 @@ function Dashboard() {
   // =====================
 
   const handleHistory = async () => {
+
+    const toastId =
+
+      toast.loading(
+
+        "Loading history..."
+
+      );
 
     try {
 
@@ -270,6 +320,18 @@ function Dashboard() {
 
       );
 
+      toast.success(
+
+        "History loaded",
+
+        {
+
+          id: toastId
+
+        }
+
+      );
+
     }
 
     catch (error) {
@@ -278,7 +340,13 @@ function Dashboard() {
 
       toast.error(
 
-        "History unavailable"
+        "History unavailable",
+
+        {
+
+          id: toastId
+
+        }
 
       );
 
@@ -295,11 +363,7 @@ function Dashboard() {
 
   return (
 
-    <div
-
-      className="dashboard-container"
-
-    >
+    <div className="dashboard-container">
 
       <Navbar />
 
@@ -363,11 +427,7 @@ function Dashboard() {
       </div>
 
 
-      <div
-
-        className="dashboard-grid"
-
-      >
+      <div className="dashboard-grid">
 
 
         {/* LEFT PANEL */}
@@ -403,7 +463,7 @@ function Dashboard() {
 
             placeholder=
 
-            "Enter company"
+            "Microsoft"
 
             value={company}
 
@@ -420,13 +480,7 @@ function Dashboard() {
           />
 
 
-          <div
-
-            className=
-
-            "button-group"
-
-          >
+          <div className="button-group">
 
             <button
 
@@ -498,7 +552,7 @@ function Dashboard() {
 
             placeholder=
 
-            "Company A"
+            "Google"
 
             value={company1}
 
@@ -523,7 +577,7 @@ function Dashboard() {
 
             placeholder=
 
-            "Company B"
+            "Microsoft"
 
             value={company2}
 
@@ -563,27 +617,15 @@ function Dashboard() {
 
         {/* RIGHT PANEL */}
 
-        <div
+        <div className="results-section">
 
-          className=
-
-          "results-section"
-
-        >
-
-          <div
-
-            className="tabs"
-
-          >
+          <div className="tabs">
 
             <button
 
               className={
 
-                activeTab
-
-                ===
+                activeTab ===
 
                 "research"
 
@@ -618,9 +660,7 @@ function Dashboard() {
 
               className={
 
-                activeTab
-
-                ===
+                activeTab ===
 
                 "swot"
 
@@ -655,9 +695,7 @@ function Dashboard() {
 
               className={
 
-                activeTab
-
-                ===
+                activeTab ===
 
                 "compare"
 
@@ -692,9 +730,7 @@ function Dashboard() {
 
               className={
 
-                activeTab
-
-                ===
+                activeTab ===
 
                 "history"
 
@@ -764,13 +800,11 @@ function Dashboard() {
 
               >
 
-                Generate detailed
+                Generate company research,
 
-                reports and
+                SWOT analyses and
 
-                competitive
-
-                intelligence.
+                competitor intelligence.
 
               </p>
 
@@ -781,7 +815,7 @@ function Dashboard() {
 
           {!loading &&
 
-          activeTab===
+          activeTab ===
 
           "research" &&
 
@@ -798,7 +832,7 @@ function Dashboard() {
 
           {!loading &&
 
-          activeTab===
+          activeTab ===
 
           "swot" &&
 
@@ -815,7 +849,7 @@ function Dashboard() {
 
           {!loading &&
 
-          activeTab===
+          activeTab ===
 
           "compare" &&
 
@@ -826,34 +860,18 @@ function Dashboard() {
               comparison=
 
               {comparison}
-
             />
-
           )}
-
-
           {!loading &&
-
-          activeTab===
-
+          activeTab ===
           "history" && (
-
             <HistoryCard
-
               history={history}
-
             />
-
           )}
-
         </div>
-
       </div>
-
     </div>
-
   );
-
 }
-
 export default Dashboard;
