@@ -2,72 +2,30 @@ import axios from "axios";
 
 const API = axios.create({
 
-  baseURL: "http://127.0.0.1:5000"
+  baseURL: import.meta.env.VITE_API_URL
 
 });
 
+export const analyzeCompany = (company) =>
 
-export const analyzeCompany = (
+  API.post("/research", { company });
 
-  company
+export const generateSwot = (company) =>
 
-) =>
+  API.post("/swot", { company });
 
-  API.post(
+export const compareCompanies = (company1, company2) =>
 
-    "/research",
+  API.post("/compare", {
 
-    { company }
+    company1,
 
-  );
+    company2
 
-
-export const generateSwot = (
-
-  company
-
-) =>
-
-  API.post(
-
-    "/swot",
-
-    { company }
-
-  );
-
-
-export const compareCompanies = (
-
-  company1,
-
-  company2
-
-) =>
-
-  API.post(
-
-    "/compare",
-
-    {
-
-      company1,
-
-      company2
-
-    }
-
-  );
-
+  });
 
 export const getHistory = () =>
 
-  API.get(
-
-    "/history"
-
-  );
-
+  API.get("/history");
 
 export default API;
-
