@@ -2,8 +2,8 @@
    NAVBAR
 ========================== */
 
-.navbar {
-
+ {
+.navbar
   display: flex;
 
   justify-content: space-between;
@@ -65,6 +65,21 @@
   color: white;
 }
 
+.logout-btn {
+  margin-left: auto;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  color: #f4f4f5;
+  padding: 9px 18px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.logout-btn:hover {
+  background: rgba(255,255,255,.1);
+}
 
 /* ==========================
    DASHBOARD
